@@ -1,0 +1,22 @@
+<nav>
+  <ul>
+    <li>
+        <a href="{{ path('main_index') }}" title="Accueil">Accueil</a>
+    </li>
+    <li>
+        <a href="{{ path('characters_list') }}" title="Tous les personnages">Tous les personnages</a>
+    </li>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li>
+            <a href="{{ path('characters_mine') }}" title="Mes personnages">Mes personnages</a>
+        </li>
+    {% else %}
+      <li>
+        <a href="{{ path('register') }}" title="Inscription">Inscription</a>
+      </li>
+      <li>
+        <a href="{{ path('login') }}" title="Connexion">Connexion</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

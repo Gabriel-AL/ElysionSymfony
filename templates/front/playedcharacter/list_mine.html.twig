@@ -1,0 +1,8 @@
+{% extends 'front/base_front.html.twig' %}
+
+{% block main %}
+    {% for character in characters %}
+        {{ character }}
+    {% endfor %}
+    <a href="{{ path('characters_new') }}" title="Créer un nouveau personnage">Créer un nouveau personnage</a>
+{% endblock %}

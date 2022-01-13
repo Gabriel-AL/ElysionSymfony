@@ -1,0 +1,35 @@
+{% extends 'front/base_front.html.twig' %}
+
+{% macro throughplaces(place) %}
+  {% if place.children is defined %}
+    {% for children in place.children %}
+      {{ self.throughplaces(children) }}
+    {% endfor %}
+  {% endif %}
+  {% if place.rp is defined %}
+    {% for rp in place.rp %}
+      {{ rp.title }}
+    {% endfor %}
+  {% endif %}
+{% endmacro %}
+
+{% from _self import throughplaces %}
+
+{% block main %}
+  {% for place in places %}
+    <p>
+      {{place.name}}
+      <ul>
+        {% for rp in place.rps %}
+          <li>
+            {{ rp.title }}
+          </li>
+        {% endfor %}
+      </ul>
+      <a href="{{ path('rp_new', {place: place.id}) }}" title="Créer un nouveau RP dans {{ place.name }}">
+        Créer un nouveau RP
+      </a>
+    </p>
+    {{ throughplaces(place) }}
+  {% endfor %}
+{% endblock %}

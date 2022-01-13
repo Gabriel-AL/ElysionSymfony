@@ -20,6 +20,20 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\EventListener\PasswordChangeListener:
+        tags:
+            - name: 'doctrine.event_subscriber'
+    
+    App\EventListener\CharacterChangeListener:
+        tags:
+            -
+                name: 'doctrine.orm.event_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\PlayedCharacter'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
