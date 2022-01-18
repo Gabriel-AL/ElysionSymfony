@@ -45,6 +45,11 @@ class Shops
      */
     private $items;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $numberOfValidationsNeeded;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -124,5 +129,17 @@ class Shops
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getNumberOfValidationsNeeded(): ?int
+    {
+        return $this->numberOfValidationsNeeded;
+    }
+
+    public function setNumberOfValidationsNeeded(int $numberOfValidationsNeeded): self
+    {
+        $this->numberOfValidationsNeeded = $numberOfValidationsNeeded;
+
+        return $this;
     }
 }

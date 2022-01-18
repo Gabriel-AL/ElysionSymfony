@@ -59,10 +59,22 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $notifications;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Demand::class, mappedBy="fromAccount", orphanRemoval=true)
+     */
+    private $demands;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Draft::class, mappedBy="fromAccount", orphanRemoval=true)
+     */
+    private $drafts;
+
     public function __construct()
     {
         $this->playedcharacters = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->demands = new ArrayCollection();
+        $this->drafts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +215,66 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($notification->getToAccount() === $this) {
                 $notification->setToAccount(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Demand[]
+     */
+    public function getDemands(): Collection
+    {
+        return $this->demands;
+    }
+
+    public function addDemand(Demand $demand): self
+    {
+        if (!$this->demands->contains($demand)) {
+            $this->demands[] = $demand;
+            $demand->setFromAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemand(Demand $demand): self
+    {
+        if ($this->demands->removeElement($demand)) {
+            // set the owning side to null (unless already changed)
+            if ($demand->getFromAccount() === $this) {
+                $demand->setFromAccount(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Draft[]
+     */
+    public function getDrafts(): Collection
+    {
+        return $this->drafts;
+    }
+
+    public function addDraft(Draft $draft): self
+    {
+        if (!$this->drafts->contains($draft)) {
+            $this->drafts[] = $draft;
+            $draft->setFromAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDraft(Draft $draft): self
+    {
+        if ($this->drafts->removeElement($draft)) {
+            // set the owning side to null (unless already changed)
+            if ($draft->getFromAccount() === $this) {
+                $draft->setFromAccount(null);
             }
         }
 

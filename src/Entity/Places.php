@@ -51,6 +51,11 @@ class Places
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isisRp;
+
     public function __construct()
     {
         $this->rps = new ArrayCollection();
@@ -171,6 +176,18 @@ class Places
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getIsisRp(): ?bool
+    {
+        return $this->isisRp;
+    }
+
+    public function setIsisRp(bool $isisRp): self
+    {
+        $this->isisRp = $isisRp;
 
         return $this;
     }
